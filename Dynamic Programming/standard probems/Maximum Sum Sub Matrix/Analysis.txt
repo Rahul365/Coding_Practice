@@ -1,0 +1,47 @@
+Maximum Sum SubMatrix : 
+Given matrix of positive and negative integers.
+Find the SubMatrix with maximum sum from the given matrix.
+
+Brute force : O(n^4)
+Try every Startpoint(x,y) with every endpoint(x',y')
+int MAXSUMSUBMATRIX(int MAT[ROWS][COLS],int ROWS,int COLS){
+    int start_r=0,start_c=0;//top left corner coordinates of max sum sub matrix
+    int end_r = 0,end_c = 0; // bottom right corner of max sum sub matrix
+    int maxSum = INT_MIN;
+    for(int row = 0;row<ROWS;row++){
+            for(int col = 0;col <COLUMNS;col++)
+            {
+                    int end_row = ROWS-1;
+                    while(end_row >= row){
+                            int end_col  = COLUMNS-1;
+                            int sum = 0;
+                            while(end_col >= col){
+                                for(int r=row;r <= end_row;r++){
+                                    for(int  c= col;c <= end_col;c++){
+                                        sum += MAT[r][c];
+                                    }
+                                }
+
+                                if(maxSum < sum){
+                                    maxSum = sum;
+                                    //start point : (row,col)
+                                    //end_point : (end_row,end_col)
+                                }
+                                end_col--;
+                            }
+                    end_row--;
+                    }
+            }
+    }
+    return maxSum;
+}
+
+Efficient : O(n^3) solution
+Idea is to use kadane's algorithm to find the maximum contiguos sum subarray.
+Algo:
+1) For each column pair (left,right) where 0<=left<=right<=COLS-1
+        compute an array temp[ROWS] 
+        temp[row] -> stores the sum of the elements in that row from left column to right column
+3) Find the maximum contiguos sum subarray here and update the maxsum .
+4) repeat steps 1-2 for every column from 0 to COLS-1
+5) Return the maxsum

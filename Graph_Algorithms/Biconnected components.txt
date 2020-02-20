@@ -1,0 +1,23 @@
+Biconnected  component : 
+  1)if it is connected i.e. it is possible to reach every vertex from every other vertex
+  2)even afer removing a vertex graph remains connected.
+
+Simply a component is a biconnected component if it doesn't have any articulation points in it.
+ 
+Given graph can have articulation points in it. 
+To identify the biconnected components in the graph:
+ 1)use a stack 
+ 2)for each vertex 'u' do this : 
+   2.i) //start dfs from unvisited node
+    //keep pushing edges onto stack until articulation point occurs
+    //if articulation point found
+        while(!stk.empty() && stk.top()!= {u,v}){
+            stk.pop();//pop the edges of the biconnected components
+        }
+        stk.pop();//to pop last edge of component {u,v}
+
+  2.ii) for the remaining edges on the stack do the same thing
+    //to pop the remaining edges of the connected components
+        while(!stk.empty()){
+            stk.pop();pop the edges of the biconnected components
+        }

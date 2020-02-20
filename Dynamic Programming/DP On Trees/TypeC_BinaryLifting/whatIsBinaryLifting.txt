@@ -1,0 +1,65 @@
+Binary Lifting : 
+ Given two nodes of a tree , you can find their lowest common ancestor using binary lifting.
+
+ Other Applications of binary lifting techniques:
+    1) finding lca(lowest common ancestor) of two nodes in a tree
+    2) finding distance between two nodes in a tree
+    3) finding ancestor of a node at distance x from a given node in a tree
+
+
+how to compute lca of two nodes ? 
+1) do dfs traversal considering root = 1(say) 
+   and compute level of each node from root node = 1;
+   and P[node][0] also;
+
+   P[N][LG] = {-1};
+   level[N];
+
+   P[node][i] => gives parent of node at distance 2^i from 'node'
+
+   initially level[root] = -1;
+   so call dfs(root,root)
+   
+   void dfs(int u,int par){
+      level[u] = 1 + level[par];
+      P[u][0] = par;
+      for(int v : g[u]){
+         if(v == par) continue;
+         dfs(v,u);
+      }
+   }
+
+2) Fill P[N][logN] matrix
+O(nlogn) for building and storing P[u][i]
+   for(int j = 1;j<LG;++j)
+      for(int i = 1;i<=n;i++){
+         if(P[i][j-1]!=-1)
+            P[i][j] = P[P[i][j-1]][i-1];
+      }
+
+O(log n) time to find the lca
+3)do_findlca(int u,int v){
+   if(level[u] < level[v]) swap(u,v);
+
+   //lifting node u to the level of node v
+
+   int i,lg;
+   for(lg = 0; (1<<lg) <= level[u];++lg);
+
+   --lg;
+
+   for(i = lg;i>=0;i--){
+      if(level[u] - (1<<i) >= level[v])
+         u = P[u][i];
+   }
+ 
+   if(u == v) return u;
+
+   for(i = lg ; i>=0; i--){
+      if(P[u][i]!=-1 && P[u][i]!=P[v][i]){
+         u = P[u][i];
+         v = P[v][i];
+      }
+   }
+   return P[u][0] or P[v][0];
+}

@@ -1,0 +1,2 @@
+hit->hot->dot->dog->cog->end
+hit->hot->lot->log->cog->end

@@ -1,0 +1,49 @@
+Kosaraju linear time algorithm for finding  strongly connected components for directed graph:
+
+1) do dfs on all the unvisited nodes and keep track of finishing time of each node (you can use stack for the finish time)
+    //gorg -> original graph
+    stack<int> stk;
+    void dfs(int source){
+        vis[source] = true;
+        for(int v : gorg[source]){
+            if(vis[v]) continue;
+            dfs(v);
+        }
+        stk.push(source);
+    }
+
+2)Reverse the edges of original graph or keep a reversed graph of original one already
+    vector<pair<int,int>> edges;
+    void doreverse(){
+        for(int i =0;i<V;++i)
+            gorg[i].clear();
+        for(pair<int,int> e : edges){
+            gorg[e.second].push_back(e.first);
+        }
+    }
+
+    or 
+    grev[N] -> reversed graph 
+
+3)do dfs again on reversed graph on source vertex as top of the stack 
+
+    void dfsII(int source){
+        vis[source] = true;
+        for(int v : grev[source]){
+            if(vis[v]) continue;
+            dfsII(v);
+        }
+    }
+     
+    memset(vis,false,sizeof(vis));
+    while(!stk.empty()){
+        source = stk.top();
+        stk.pop();
+        if(vis[source]) continue;
+
+        dfsII(source);//traverse the strongly connected component with source as starting vertex
+    }
+
+
+
+compexity : O(V + E)
