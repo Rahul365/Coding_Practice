@@ -10,6 +10,50 @@ const int N = 1e5;
 int parent[N];
 int sz[N];
 
+template<typename T>
+class dsu{
+    vector<T> parent;
+    vector<T> size;
+    T n;
+    public:;
+    dsu(T _n){
+        n = _n;
+        parent = vector<T>(n+1);
+        size = vector<T>(n+1);
+        for(int i = 0;i<=n;++i)
+        {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+    
+    T root(T u){
+        while(parent[u]!=u){
+            parent[u] = parent[parent[u]];
+            u = parent[u];
+        }
+        return u;
+    }
+    
+    bool wunion(T u, T v){
+        T ru = root(u);
+        T rv = root(v);
+        if(ru == rv) return false;
+        if(size[ru]< size[rv])
+            swap(ru,rv);
+        parent[rv] = ru;
+        size[ru] += size[rv];
+        return true;
+    }
+    
+    T numberOfDisconnectedComponents(){
+        T ans =0;
+        for(int i = 1;i<=n;++i)
+            ans += (parent[i] == i);
+        return ans;
+    }
+};
+
 void init()
 {
     for (int i = 0; i < N; i++)

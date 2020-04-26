@@ -69,7 +69,7 @@ vector<int> usingFA(string T,string P,int n,int m){
 int *F = NULL;
 void precomputeF(string P,int m){
     F = new int[m];
-    F[0] = 0;
+    for(int i =0 ; i<m ;++i) F[i] = 0;
     int i = 1,j=0;
     while(i<m){
         if(P[i] == P[j]){

@@ -1,0 +1,2 @@
+For Permutations and Combinations : https://www.mathsisfun.com/combinatorics/combinations-permutations.html
+For computing (n r) or nCr efficiently use  solution in : marbles_combinations.pp

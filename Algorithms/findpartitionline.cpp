@@ -73,7 +73,7 @@ bool ispartition(int *x,int *y,int *v,int n){
     //origin is shifted to MAX
     long long xvals[size] = {0};//to handle the negative x values e.g is x[i] = -1 then x[i]+MAX = -1 + 1000 = 999
     for(int i = 0;i<n;i++){
-        xvals[x[i] + MAX]++;
+        xvals[x[i] + MAX]+=v[i];
     }
 
     for(int i = 1;i<size;i++){

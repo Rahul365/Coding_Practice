@@ -14,6 +14,9 @@ int main()
     for (int i = 0; i < n; i++)
     {
         scanf("%lld", &a[i]);
+    }
+    //sort(a,a+n);//use this if the relative order doesn't matter
+    for(int i = 0;i<n;++i){
         sum[i + 1] = sum[i] + a[i];
     }
 
