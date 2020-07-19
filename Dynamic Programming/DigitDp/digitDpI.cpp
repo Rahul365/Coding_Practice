@@ -102,6 +102,41 @@ ll digitsum(ll a, ll b)
     return sumB - sumA;
 }
 
+
+vector<int> dig;
+ll  getsum(int pos,ll sum,bool tight){
+     if(pos == (int)dig.size()) return sum;
+     int lim = tight?dig[pos]:9;
+     ll &ans = dp[pos][sum][tight];
+     if(ans!=-1) return ans;
+     ans = 0; 
+     for(int i = 0;i<=lim;++i){
+      ans += getsum(pos+1,sum+i,tight && i == lim);   
+     }
+    return ans;
+}
+
+void solve(){
+    while(1){
+        int l,r;
+        cin >> l >> r;
+        if(l==r && r==-1) break;
+        --l;
+        auto getdigs = [&](int num){
+            int x = num;
+            dig.clear();
+            while(x){
+                dig.push_back(x%10);
+                x/=10;
+            }
+            reverse(dig.begin(),dig.end());
+        };
+        memset(dp,-1,sizeof dp); getdigs(l); ll left = getsum(0,0,true);
+        memset(dp,-1,sizeof dp); getdigs(r); ll right = getsum(0,0,true);
+        cout <<(right-left)<<"\n";
+    }
+}
+
 int main()
 {
     ll a, b;
