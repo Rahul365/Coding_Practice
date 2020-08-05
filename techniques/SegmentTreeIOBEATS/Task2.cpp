@@ -67,21 +67,7 @@ void buildseg(int i,int l,int r){
     buildseg(i+i+2,m+1,r);
     int *aux = merge(seg[i+i+1],seg[i+i+2]);
     for(int j=0;j<4;++j) seg[i][j] = aux[j];
-    // if(seg[i+i+1][0] >= seg[i+i+2][0]){
-    //     seg[i][0] = seg[i+i+1][0];
-    //     if(seg[i+i+1][1]!=seg[i][0]) maxself(seg[i][1],seg[i+i+1][1]);
-    //     if(seg[i+i+2][1]!=seg[i][0]) maxself(seg[i][1],seg[i+i+2][1]);
-    //     if(seg[i+i+2][0]!=seg[i][0]) maxself(seg[i][1],seg[i+i+2][0]);      
-    //     seg[i][3] = seg[i+i+1][3] + (seg[i+i+1][0] == seg[i+i+2][0]?seg[i+i+2][3]:0);  
-    // }
-    // else{
-    //     seg[i][0] = seg[i+i+2][0];
-    //     if(seg[i+i+1][1]!=seg[i][0]) maxself(seg[i][1],seg[i+i+1][1]);
-    //     if(seg[i+i+2][1]!=seg[i][0]) maxself(seg[i][1],seg[i+i+2][1]);
-    //     if(seg[i+i+1][0]!=seg[i][0]) maxself(seg[i][1],seg[i+i+1][0]);      
-    //     seg[i][3] = seg[i+i+2][3];
-    // }
-    // seg[i][2] = seg[i+i+1][2] + seg[i+i+2][2];
+    
 }
 
 void upintervalmin(int i,int l,int r,int L,int R,int x){
@@ -92,21 +78,17 @@ void upintervalmin(int i,int l,int r,int L,int R,int x){
         int &cntmx = seg[i][3];
         if(LOGS)
         cerr << "Pending push on node "<<i << " with value "<<push[i] <<" : ";
-        if(mx2 < push[i] && push[i] < mx){
-            if(LOGS)
-            cerr << sum << " to " << (sum-cntmx*(mx-push[i]))<< " ";
-            sum -= cntmx * (mx-push[i]);
-            mx = push[i];
+        if(!(push[i] >= mx)){
             if(l!=r){
                 minself(push[i+i+1],push[i]);
                 minself(push[i+i+2],push[i]);
             }
         }
-        else if(push[i] <= mx2){
-           if(l!=r){
-                minself(push[i+i+1],push[i]);
-                minself(push[i+i+2],push[i]);
-            }
+        if(mx2 < push[i] && push[i] < mx){
+            if(LOGS)
+            cerr << sum << " to " << (sum-cntmx*(mx-push[i])) <<" ";
+            sum -= cntmx * (mx-push[i]);
+            mx = push[i];
         }
         if(LOGS)
         cerr <<"\n";
@@ -164,21 +146,19 @@ int rangesum(int i,int l,int r,int L,int R){
         int &cntmx = seg[i][3];
         if(LOGS)
         cerr << "Pending push on node "<<i << " with value "<<push[i] <<" : ";
-        if(mx2 < push[i] && push[i] < mx){
-            if(LOGS)
-            cerr << sum << " to " << (sum-cntmx*(mx-push[i])) <<" ";
-            sum -= cntmx * (mx-push[i]);
-            mx = push[i];
+        if(!(push[i] >= mx)){
             if(l!=r){
                 minself(push[i+i+1],push[i]);
                 minself(push[i+i+2],push[i]);
             }
         }
-        else if(push[i] <= mx2){
-            if(l!=r){
-                minself(push[i+i+1],push[i]);
-                minself(push[i+i+2],push[i]);
-            }
+        if(mx2 < push[i] && push[i] < mx){
+            if(LOGS)
+            cerr << sum << " to " << (sum-cntmx*(mx-push[i])) <<" ";
+            
+            sum -= cntmx * (mx-push[i]);
+            mx = push[i];
+
         }
         push[i] = inf;
         if(LOGS)

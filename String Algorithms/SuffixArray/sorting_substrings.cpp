@@ -2,11 +2,22 @@
 using namespace std;
 
 
-void buildsuffix(vector<int> &p,vector<int> &c,string &s){
-    s += '$';
+const int INF = 1e9+7;
+const int inf = 1e9+7;
+const int LG = 20;
+const int maxn = 4e5+10;
+vector<int> a(maxn*4);
+vector<int> p,c,lcp;
+string s;
+int sp[maxn][LG];
+int LOG[maxn];
+
+
+void buildsuffix(){
+    s += ' ';
     const int n = s.length();
-    c = vector<int>(n);
-    p = vector<int>(n);
+    c = vector<int>(n);//equivalence class values
+    p = vector<int>(n);//order of suffixes
     {
         vector<pair<char,int>> a(n);
         for(int i = 0;i<n;++i) a[i] = {s[i],i};
@@ -53,7 +64,7 @@ void buildsuffix(vector<int> &p,vector<int> &c,string &s){
 }
 
 
-void buildlcp(vector<int> &p,vector<int> &c,const string &s,vector<int> &lcp){
+void buildlcp(){
     const int n = s.length();
     lcp = vector<int>(n);
     int k = 0;
@@ -69,11 +80,6 @@ void buildlcp(vector<int> &p,vector<int> &c,const string &s,vector<int> &lcp){
     //     cerr << p[i] << " "<<lcp[c[p[i]]]<<" " <<s.substr(p[i])<<"\n";
     // }
 }
-
-const int INF = 1e9+7;
-const int maxn = 4e5+10;
-vector<int> a(maxn*4,INF);
-vector<int> p,c,lcp;
 
 void build(int i,int l,int r){
     if(l==r){
@@ -103,7 +109,7 @@ int rangemin(int l,int r,int L,int R,int i){
     return min(left,right);
 }
 
-void brute(const string &s,vector<pair<int,int>> a){
+void brute(vector<pair<int,int>> a){
     sort(a.begin(),a.end(),[&](const auto &p1,const auto &p2)
     {
         return s.substr(p1.first,p1.second-p1.first+1)<s.substr(p2.first,p2.second-p2.first+1) || 
@@ -113,19 +119,56 @@ void brute(const string &s,vector<pair<int,int>> a){
     for(auto p : a){
         cout << p.first+1 << " " << p.second+1 <<" , ";
     }
-    cout <<"\n"; 
+    cout <<"\n";
+}
+
+void buildRMQ(int n){
+    LOG[1] = 0;
+    for(int i = 2;i<maxn;++i){
+        LOG[i]=LOG[i>>1]+1;
+    }
+
+    for(int i = 0;i<maxn;++i)
+        for(int j = 0;j<20;++j) 
+            sp[i][j] = inf;
+
+    for(int i = 0;i<n;++i)
+    {
+           sp[i][0] = lcp[i];
+        //    cerr <<  lcp[i] << " \n"[i==n-1];
+    }
+    
+    for(int L = 1;L<LG;++L)
+        for(int i = 0;i+(1<<L) <= n;++i)
+                sp[i][L] = min(sp[i][L-1],sp[i+(1<<(L-1))][L-1]);
+
+    // for(int L = 0;L<LG;++L)
+    //     for(int i = 0;i<n;++i)
+    //         cerr << sp[i][L] << " \n"[i==n-1];
+
 }
 
 int main(){
-    string s;
+    // string S ="";
+    // for(int i = 33;i<=127;i++)        S+=char(i);
+    // cerr << S <<"\n";
     cin >> s;
-    buildsuffix(p,c,s);
-    buildlcp(p,c,s,lcp);
-    build(0,0,s.length()-1);
+    buildsuffix();
+    buildlcp();
+    fill(a.begin(),a.end(),INF);
+    // build(0,0,s.length()-1);
+    buildRMQ(s.length());
     // cerr << min(c[0],c[4])+1 << " " << max(c[0],c[4]) <<"\n";
     auto LCP =[&](int l,int r){
         if(l > r) swap(l,r);
-        return rangemin(0,s.length()-1,l+1,r,0);
+        // return 
+        // int x = rangemin(0,s.length()-1,l+1,r,0);
+        ++l;
+        int L = LOG[r-l+1];
+        // if(x!=min(sp[l][L],sp[r-(1<<L)+1][L])){
+        //     cerr << l-1 << " " << r << " : "<< x << " "<<min(sp[l][L],sp[r-(1<<L)+1][L]) <<"\n";
+        // }
+        return min(sp[l][L],sp[r-(1<<L)+1][L]);
     };
     // cerr << LCP(c[0] , c[4])<<"\n";
     int m;
@@ -157,11 +200,8 @@ int main(){
             }
             return A < B;
         }
-        if(L1 > L2){
-            if(_lcp < L2){
-                return s[A.first + _lcp] < s[B.first + _lcp];
-            }
-            return L1 < L2;
+        if(_lcp < L2){
+            return s[A.first + _lcp] < s[B.first + _lcp];
         }
         return false;
     });
