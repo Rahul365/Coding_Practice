@@ -20,7 +20,7 @@ bool validgrid(){
         }
         fill(cnt.begin(),cnt.end(),0);
         //checking for every column too
-        //here we consider row as col and col as row
+        //here we consider (row,col) = (col,row)
         for(int col = 0;col < N;++col){
             if(grid[col][row] && ++cnt[grid[col][row]] > 1) return false;
         }
