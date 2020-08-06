@@ -3,11 +3,13 @@ using namespace std;
 using ll = long long int;
 const ll mod = 998244353;
 // https://codeforces.com/problemset/problem/1326/C
-int main(){
-    ll n,k;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    ll n, k;
     cin >> n >> k;
     vector<ll> a(n);
-    for(int i = 0;i<n;++i){
+    for (int i = 0;i<n;++i) {
         cin >> a[i];
     }
     ll ans = (n*(n+1))>>1;
@@ -21,17 +23,17 @@ int main(){
     int l = 0;
     int r = n-1;
     //trim both ends 
-    while(a[l] <= (n-k)) ++l;
-    while(a[r] <= (n-k)) --r;
-    vector<ll> b(n+1,0);
-    for(int i=n-1;i>=0;--i){
-        if(a[i]>n-k) b[i] = 1;
+    while (a[l] <= (n-k)) ++l;
+    while (a[r] <= (n-k)) --r;
+    vector<ll> b(n+1, 0);
+    for (int i=n-1;i>=0;--i) {
+        if (a[i]>n-k) b[i] = 1;
         b[i] += b[i+1];
     }
     ll prev = r+1;
     ll count = 1;
-    while(r >= l){
-        if(b[r] > b[r+1]){
+    while (r >= l) {
+        if (b[r] > b[r+1]) {
             ll num = prev - r;
             prev = r;
             count = (1LL * num *count)%mod;
