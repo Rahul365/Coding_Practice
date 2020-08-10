@@ -32,7 +32,7 @@ int main(){
     else{
         all = 1.0 *(1<<qs);//every ? can be replaced with {+,-}, so there are 2 possible to replace a 1 ?
         //thus total possible strings will be (2^count(?))
-        fav = fact[p+m]/(fact[p]*fact[m]);//number of permutations of without repetitions (and with duplicates) of length (p+m) objects selected from (p+m)objects 
+        fav = fact[p+m]/(fact[p]*fact[m]);//number of permutations without repetitions (and with duplicates) of length (p+m) objects selected from (p+m)objects 
         //where + is repeated p times and - is repeated m times
         //cerr<<p<<" " << m << " "<< fav << " " <<all <<"\n";
         cout << setprecision(10) <<fixed<<(fav/all)<<"\n";//basic probability = (#of favorable outcomes/total # of possible outcomes)

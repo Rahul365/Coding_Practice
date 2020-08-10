@@ -33,12 +33,14 @@ void init(){
             if(v == p) continue;
             dfsii(v,u);
             for(int x = 1;x <= k-1;++x){
+                //(number of nodes at distance x from node u in the subtree of it's child v) * (total number of nodes at remaining distance (k-x) in subtree of node u excluding the child v)
                 sub += dp[v][x-1]* (dp[u][k-x] - dp[v][k-x-1]);
             }
         }
     };
     dfs(1,0);
     dfsii(1,0);
+    //(sub/2) because the number of pairs are unordered
     answer += sub>>1;
     // for(int i = 1;i<=n;++i)
     // { 
