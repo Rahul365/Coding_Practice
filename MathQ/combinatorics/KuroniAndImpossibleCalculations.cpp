@@ -9,6 +9,7 @@ int main(){
     vector<int> a(n);
     for(int i = 0;i<n;++i){
         cin >> a[i];
+        if(a[i] >= m) a[i]%=m;
     }
     sort(a.begin(),a.end());
     a.resize(unique(a.begin(),a.end())- a.begin());
