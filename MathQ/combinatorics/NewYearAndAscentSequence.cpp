@@ -9,8 +9,8 @@ int main(){
     int n;
     cin >> n;
     int cnt = 0;//to store the number of ascents so far
-    vector<pair<int,int>> a;
-    vector<int> b;
+    vector<pair<int,int>> a;//refine : we can just use a[i] = {minimum value of the ith sequence}
+    vector<int> b;//stores the maximum value of every sequence
     for(int i = 0;i<n;++i){
         int l;
         cin >> l;
@@ -40,6 +40,16 @@ int main(){
         }
         cnt += ok;
     }
+ /*
+    O(n^2) way to count the concatenated ascents
+    where a[i] = {minimum value of the ith sequence, maximum value of the ith sequence}
+    for(int i = 0;i<n;++i){
+        for(int j = 0;j<n;++j){
+            answer += a[i].first < a[j].second;
+        }
+    }
+
+*/
     n = a.size();
     sort(b.begin(),b.end());
     // cerr << n << "\n";
