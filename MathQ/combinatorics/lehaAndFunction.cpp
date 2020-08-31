@@ -5,6 +5,8 @@ using namespace std;
 /*
      Just read some comment for this probem under the contest post
      F(n,k)->Not clearly understandable through editorial either
+     Expected value for minimal element = (N+1)/(K+1)
+     with that in mind, higher value of A[] is mapped to smallest value of B[]
 */
 int main(){
     ios_base::sync_with_stdio(false);
