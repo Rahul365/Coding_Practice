@@ -3,6 +3,7 @@ using namespace std;
 using ll = long long int;
 const ll mod = 998244353;
 const int maxn = 1e6+1;
+// https://codeforces.com/problemset/problem/1091/D
 ll pmod(ll a,ll b){
     ll r = 1;
     while(b){
@@ -17,6 +18,10 @@ int main(){
     ll n;
     scanf("%lld",&n);
     /*
+    There are two types of subarrays we are looking at here : 
+    1) They are fully  formed subarray of length n
+    2) They are formed by suffix of length k from current permutation and prefix of length n-k from next permutation
+    There are n! subarrays of the first type.
     Answer = n*n! - sum(n!/k!) where k = 1 to n-1
     */
     ll fn = n;
