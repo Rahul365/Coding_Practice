@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 #define removedups(v) sortvector(v); v.resize(unique(v.begin(),v.end()) - v.begin());
 #define USE_FILE(i,o) freopen(i,"r",stdin); freopen(o,"w",stdout)
+#define boost ios_base::sync_with_stdio(false); cin.tie(0)
 #define readint(x) scanf("%d",&x)
 #define printint(x) printf("%d",x)
 #define readint64(x) scanf("%lld",&x)
