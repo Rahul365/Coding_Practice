@@ -63,7 +63,7 @@ T pw(T a,T b){
     return r;
 }
 
-vector<int> getnumber(ll x){
+vector<int> getnumber(ll x){    
     vector<int> answer;
     while(x){
         answer.emplace_back(x%10);
@@ -100,6 +100,7 @@ ll countGoodNumbers(vector<int> num){
     }
     return answer;
 }
+
 //https://codeforces.com/problemset/problem/204/A
 int main(){
     ll l,r;
