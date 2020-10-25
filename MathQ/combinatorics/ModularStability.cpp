@@ -6,7 +6,6 @@
 #define printint(x) printf("%d",x)
 #define readint64(x) scanf("%lld",&x)
 #define printint64(x) printf("%lld",x)
-#define printdouble(x) printf("%.6f",x)
 #define printpair(p) cerr<<p.first << " " p.second <<"\n" 
 #define sortvector(v) sort(v.begin(),v.end())
 #define trace_vector(v) for(auto x : v) cerr << x <<" ";cerr<<"\n";
@@ -54,39 +53,56 @@ T gcd(T a,T b){
     return a;
 }
 
-int divisibleByp(int l,int r,int p){
-    return (r/p) - (l-1)/p;
+ll fact[MAXN * 5];
+void computefact(){
+    fact[0] = 1;
+    for(ll i = 1;i < MAXN *5;++i){
+        fact[i] = (fact[i-1] * i)%MOD2;
+    }
+}
+ll ncr(ll n,ll r){
+    if(n < r) return 0;
+    ll answer = fact[n];
+    answer = (answer * power<ll>(fact[r],MOD2-2LL,MOD2))%MOD2;
+    answer = (answer * power<ll>(fact[n-r],MOD2-2LL,MOD2))%MOD2;
+    return answer;
 }
 
-int notdivisibleByp(int l,int r,int p){
-    return r-l+1 - divisibleByp(l,r,p);
+
+void test(){
+    /*Conclusion for this Stable Modularity property, all numbers in the array should be multiple of smallest element in the array*/
+    vector<int> arr({3,9,6,12,36});
+    for(int num = 123;num <=124254;++num){
+        int val = num;
+        for(int m : arr) val %= m;
+        do{
+            int tmp  =num;
+            for(int m : arr) tmp%=m;
+            if(tmp!=val){ 
+                cerr <<"For X = " << num << " ";
+                for(int m : arr ) cerr << m <<" "; cerr<<"\n";
+            }
+        }while(next_permutation(arr.begin(),arr.end()));
+        reverse(arr.begin(),arr.end());
+    }
 }
-// https://codeforces.com/problemset/problem/621/C
+
+ll countMultiples(ll l, ll r,ll of){
+    return (r/of) - (l-1)/of;
+}
+// https://codeforces.com/problemset/problem/1359/E
 int main(){
-    int n,p;
+    computefact();
+    int n,k;
     readint(n);
-    readint(p);
-    vector<pair<ll,ll>> arr(n);
-    for(int i = 0;i<n;++i){
-        int l,r;
-        readint(l); readint(r);
-        arr[i] = {notdivisibleByp(l,r,p),r-l+1};
+    readint(k);
+    ll answer = 0;
+    for(int i = 1;i<=n;++i){
+        ll N = countMultiples(i+1,n,i);
+        if(N>=k-1){
+            answer = (answer + ncr(N,k-1))%MOD2;
+        }
     }
-    /*
-        Since p is the prime number , so it can be either present int flower count of i & (i+1)%n shark.
-        Wet shark reward 1000 to both the sharks.
-        let P(x) be the probability that product of flower count by x and (x + 1)%n sharks is divisible by p.
-        P(x) = 1 - (Pi(not divisible by p) * Pj(not divisible p))
-        Expected amount of money collected by Sharks = SUM(P(i & (i+1)%n)*2000) for i = 0 to i < n
-
-    */
-    double answer = 0.0;
-    for(int i = 0;i<n;++i){
-        int next = (i+1)%n;
-        double prob = 1.0 - ((1.0*arr[i].first/arr[i].second) * (1.0 * arr[next].first/arr[next].second*1.0));
-        // cerr << prob*2000 <<"\n";
-        answer = answer +  (prob*2000.0);
-    }
-    printf("%.9f\n",answer);
+    printint64(answer);
     return 0;
 }
