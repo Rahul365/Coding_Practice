@@ -128,8 +128,8 @@ int main(){
             if(D[a][b] doesn't use edge u-v) then D[a][b] is already the shortest path
             and D[a][u]+D[v][b] or D[a][v] + D[u][b] both will be > D[a][b]
             else if(path(a,b) contains edge(u,v))
-            then min(D[a][u] + D[v][b],D[a][v]+D[u][b]) will be the shortest as we are making the weight of the edge u,v to 0;
-
+            then min(D[a][u] + D[v][b],D[a][v]+D[u][b]) will be the shortest 
+            as we are making the weight of the edge u,v to 0;
             */
             sub += min({D[a][b],D[a][u]+D[v][b],D[a][v]+D[u][b]});
         }

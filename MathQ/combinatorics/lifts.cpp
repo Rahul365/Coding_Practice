@@ -7,6 +7,7 @@ const int N = 5004;
 template<typename T>
 void addself(T &a,T b){
     a+=b;
+    /*using modulus(%) operator here causes TLE > 2 secs*/
     if(a >= mod) a-=mod;
     if(a < 0) a+=mod;
 }

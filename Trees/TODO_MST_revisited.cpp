@@ -232,7 +232,6 @@ int main()
                 }
             }
         }
-
         printf("%lld\n", mst);
         ans = mst;
     }

@@ -1,3 +1,4 @@
+// https://www.codechef.com/problems/QUERY
 #include<bits/stdc++.h>
 #define removedups(v) sortvector(v); v.resize(unique(v.begin(),v.end()) - v.begin());
 #define USE_FILE(i,o) freopen(i,"r",stdin); freopen(o,"w",stdout)
