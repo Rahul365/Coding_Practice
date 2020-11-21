@@ -10,7 +10,7 @@ T count(T  n){
 int main(){
     int n;
     cin >> n;
-    map<int,int> cnt;
+    unordered_map<int,int> cnt;
     for(int i = 0;i<n;++i){
         int v;
         cin >> v;
