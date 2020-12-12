@@ -36,7 +36,7 @@ int main(){
     cin >> n;
     ll sum = 0;
     /*
-        IDEA : SUM OF EVERY POSSIBLE is the same.
+        IDEA(from editorial) : SUM OF EVERY POSSIBLE is the same.
         Consider the elements of the array sorted.
         Then let partition1 will be from [1,n]
         and partition2 will be from [n+1,2*n].
