@@ -29,7 +29,7 @@ void buildsuffixArr(string &s,vector<int> &p,vector<int> &c){
         for(int i = 0;i<n;++i) a[i] = {s[i],i};
         sort(a.begin(),a.end());
         for(int i = 0;i<n;++i) p[i] = a[i].second;
-        c[a[0].second] = 0;
+        c[a[0].second] = 0;//setting up equivalence class for substr of length 1
         for(int i = 1 ;i<n;++i){
             c[a[i].second] = (a[i].first!=a[i-1].first) + c[a[i-1].second];
         }

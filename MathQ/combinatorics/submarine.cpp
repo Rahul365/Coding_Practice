@@ -27,18 +27,21 @@ void addself(ll &a,ll b){
     if(a >= mod) a-=mod;
     else if(a < 0) a+=mod;
 }
+
 // https://codeforces.com/problemset/problem/1195/D2
 int main(){
     int n;
     cin >> n;
     vector<int> ele_len(11,0);
     vector<pair<int,int>> arr(n);
+    
     for(int i =0 ;i<n;++i){
         cin >> arr[i].first;
         arr[i].second = getlen(arr[i].first);
         ele_len[arr[i].second]++;
     }
-    auto count = [&](ll p,ll val_p,ll q,ll val_q){
+
+    auto count = [](ll p,ll val_p,ll q,ll val_q){
         //cerr <<"p : "<<p <<" , q : "<< q<<"\n";
         ll res = 0;
         if(val_p){
@@ -91,6 +94,7 @@ int main(){
         }
         return res;
     };
+
     ll answer = 0;
     for(int i = 0;i<n;++i){
         ll curr = arr[i].first;
@@ -100,7 +104,6 @@ int main(){
             ll freq = ele_len[j];
             if(!freq) continue; 
             ll res = count(len,curr,j,0LL);
-            
             //cerr << res*freq<<"\n";
             addself(answer,(freq*res)%mod);
             //if(len == j) continue;
