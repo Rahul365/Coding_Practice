@@ -47,10 +47,9 @@ class sepChain : public HashTable
     }
 
 public:
-
     sepChain(int r_size = 10)
     {
-        r_size = max(r_size,1);
+        r_size = max(r_size, 1);
         m_size = r_size;
         m_total = 0;
         chains = new ChainNode *[m_size];
@@ -84,7 +83,7 @@ public:
             Node *tmpNode = new Node(val);
             tmpNode->next = chains[id]->link;
             chains[id]->link = tmpNode;
-            if(chains[id]->block_size > (m_size*75)/100)
+            if (chains[id]->block_size > (m_size * 75) / 100)
             {
                 rehash();
             }
@@ -168,7 +167,7 @@ int main()
     HashTable *h = new sepChain(_size);
     while (true)
     {
-        cout <<":: OPERATIONS ::\n";
+        cout << ":: OPERATIONS ::\n";
         cout << "0: insert: \n";
         cout << "1: check: \n";
         cout << "2: remove: \n";
