@@ -46,6 +46,27 @@ class sepChain : public HashTable
         return val % m_size;
     }
 
+    void rehash()
+    {
+        m_size += m_size;                //double the hash
+        ChainNode **old_chains = chains; //temporary hold the old values
+        chains = new ChainNode *[m_size];
+        for (int i = 0; i < m_size; ++i)
+        {
+            chains[i] = new ChainNode();
+        }
+        for (int i = 0; i < m_size / 2; ++i)
+        {
+            Node *head = old_chains[i]->link;
+            m_total -= old_chains[i]->block_size;
+            while (head)
+            {
+                int val = head->val;
+                insert(val);
+                head = head->next;
+            }
+        }
+    }
 public:
     sepChain(int r_size = 10)
     {
@@ -120,28 +141,6 @@ public:
             return 1;
         }
         return 0;
-    }
-
-    void rehash()
-    {
-        m_size += m_size;                //double the hash
-        ChainNode **old_chains = chains; //temporary hold the old values
-        chains = new ChainNode *[m_size];
-        for (int i = 0; i < m_size; ++i)
-        {
-            chains[i] = new ChainNode();
-        }
-        for (int i = 0; i < m_size / 2; ++i)
-        {
-            Node *head = old_chains[i]->link;
-            m_total -= old_chains[i]->block_size;
-            while (head)
-            {
-                int val = head->val;
-                insert(val);
-                head = head->next;
-            }
-        }
     }
 
     void print()
