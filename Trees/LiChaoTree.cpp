@@ -113,7 +113,7 @@ ll getMin(ll x, int i = 1, int l = 1, int r = N)
     {
         return f(line[i], x);
     }
-    if (x < m)
+    if (x <= m)
     {
         return min(f(line[i], x), getMin(x, 2 * i, l, m));
     }
