@@ -65,11 +65,10 @@ ll getMin(int l, int r, ll x, Node *&node)
     if (l == r)
         return node->line(x);
     int mid = l + (r - l) / 2;
-    if (x <= mid && node->left)
+    if (x <= mid)
         return min(node->line(x), getMin(l, mid, x, node->left));
-    else if (node->right)
+    else
         return min(node->line(x), getMin(mid + 1, r, x, node->right));
-    return node->line(x);
 }
 
 void merge(Node *&a, Node *b)
@@ -151,4 +150,4 @@ int main()
     }
 
     return 0;
-}   
+}
