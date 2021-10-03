@@ -5,7 +5,7 @@ using namespace std;
 
 int N;
 ll *bitree;
-
+// IntelPentiumCore#365
 
 void update(int index,ll val){
     //cout<<"update from "<<index<<"\n";
