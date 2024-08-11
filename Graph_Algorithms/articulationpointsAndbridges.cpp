@@ -24,6 +24,7 @@ void dfs(int u){
     int child = 0;
     for(int v : g[u]){
         if(!vis[v]){
+            par[v] = u;//assign parent of node v here to avoid processing parent of node u
             dfs(v);
             ++child;
             low[u] = min(low[u],low[v]);
